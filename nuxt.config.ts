@@ -2,10 +2,20 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-
   nitro: {
-    preset: "cloudflare-pages"
+    preset: "cloudflare-pages",
   },
-
-  modules: ["nitro-cloudflare-dev"]
+  modules: [
+    "nitro-cloudflare-dev",
+    "@nuxt/icon",
+    "nuxt-bootstrap-icons"
+  ],
+  bootstrapIcons: {
+    prefix: "Icon"
+  },
+  icon: {
+    serverBundle: {
+      collections: ['uil', 'mdi'] // <!--- this
+    }
+  }
 })

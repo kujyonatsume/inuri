@@ -1,5 +1,5 @@
 <script lang="tsx" setup>
-import AccordionItem from "@/components/AccordionItem";
+
 var audio = {} as HTMLAudioElement
 onMounted(() => {
     audio = new Audio()
@@ -7,18 +7,45 @@ onMounted(() => {
 
 var list = (await useFetch("/api/all")).data.value
 
-async function ButtonClick(events: MouseEvent) {
-    var btn = (events.target as HTMLButtonElement)
+function click(name: string) {
     audio.pause()
     audio.currentTime = 0
-    audio.src = "/api/sound/" + btn.innerText
+    audio.src = "/api/sound/" + name
     audio.play()
 }
-
-const Item = (name: string) => <button type="button" class="btn btn-primary" onClick={ButtonClick}>{name}</button>
 </script>
 <template>
-    <div class="accordion" id="accordionExample">
-        <AccordionItem id="accordionExample" label="音檔" :content="list.map(Item)" />
+    <div class="card" style="width: 100%;">
+        <div class="card-body">
+            <h5 class="card-title">全部</h5>
+            <button v-for="name in list" id="vo-btn" class="btn" @click="() => click(name)">{{ name.replace(".mp3",
+                "")}}</button>
+        </div>
     </div>
 </template>
+<style lang="css">
+.accordion-item:first-of-type>.accordion-header .accordion-button {
+    background-color: unset
+}
+
+#title {
+    text-align: center;
+}
+
+.card {
+    border-radius: 20px;
+    background-color: unset;
+    padding: 10px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
+}
+
+#vo-btn {
+    border-radius: 50px;
+    background-color: rgb(103, 139, 255);
+    color: bisque;
+    font-size: 18px;
+    margin: 3px;
+
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.15);
+}
+</style>
